@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Dark "\" diagonal, split at center -->
+  <polygon points="10,6 22,6 32,26 26,30" fill="#1f2937"/>
+  <polygon points="32,34 38,38 54,58 42,58" fill="#1f2937"/>
+  <!-- Blue "/" diagonal, split at center -->
+  <polygon points="42,6 54,6 38,30 32,26" fill="#2563eb"/>
+  <polygon points="26,34 32,38 22,58 10,58" fill="#2563eb"/>
+</svg>

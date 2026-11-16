@@ -1,0 +1,10 @@
+User-agent: *
+
+Disallow: /admin/
+Disallow: https://www.portal.xcelaudit.com/
+Disallow: https://www.portal.xcelaudit.com/landingpage
+Disallow: https://bms.xcelaudit.com/
+
+Allow: /
+
+Sitemap: https://xcelaudit.com/sitemap.xml

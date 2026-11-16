@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--
+      Google Tag Manager (best-effort).
+      Root cause: privacy extensions often block gtm.js / pagead beacons (ERR_BLOCKED_BY_CLIENT).
+      Protection: load is async + wrapped so a blocked script never throws into app code.
+      Form submit / createOrganisation must never await or depend on this container.
+    -->
+    <script>
+      (function (w, d, s, l, i) {
+        try {
+          w[l] = w[l] || [];
+          w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+          var f = d.getElementsByTagName(s)[0];
+          var j = d.createElement(s);
+          var dl = l != "dataLayer" ? "&l=" + l : "";
+          j.async = true;
+          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+          j.onerror = function () {
+            /* Ad blocker blocked GTM — app continues without tracking. */
+          };
+          f.parentNode.insertBefore(j, f);
+        } catch (e) {
+          /* Never let GTM bootstrap abort page JS. */
+        }
+      })(window, document, "script", "dataLayer", "GTM-56ZDPRTS");
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="e75Zv5jB-S3w5ECT7m7n8-92wgrjySjz4Mq3y2DKF0Y" />
+
+    <title>XcelAudit — Audit Management Platform for India's CA Firms</title>
+    <meta name="description" content="Audit management platform built for India's CA firms. NFRA & Peer Review ready. Pay per audit." />
+
+    <link rel="icon" type="image/png" href="/assets/XcelAudit-FavIcon.png?v=1" />
+    <link rel="shortcut icon" href="/assets/XcelAudit-FavIcon.png?v=1" />
+    <link rel="apple-touch-icon" href="/assets/XcelAudit-FavIcon.png?v=1" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="XcelAudit" />
+    <meta property="og:description" content="Audit management platform built for India's CA firms." />
+    <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a1e6c66f-edbf-4d0b-a3fa-412ad1df09eb/id-preview-15028c6a--89a9a1d3-1eb5-4967-998e-c4b822ee09ed.lovable.app-1781248458455.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="XcelAudit" />
+    <meta name="twitter:description" content="Audit management platform built for India's CA firms." />
+    <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a1e6c66f-edbf-4d0b-a3fa-412ad1df09eb/id-preview-15028c6a--89a9a1d3-1eb5-4967-998e-c4b822ee09ed.lovable.app-1781248458455.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" />
+    <script type="module" crossorigin src="/assets/index-DPk8qX9O.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CYzKt1QH.css">
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56ZDPRTS"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div id="root"></div>
+  </body>
+</html>
