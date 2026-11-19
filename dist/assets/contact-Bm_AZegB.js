@@ -5,7 +5,7 @@ import { trackContactConversion } from "./safe-analytics.js";
 const { useState } = React;
 
 // Business API — independent of GTM. See api-gateway-resource-policy.json for CORS/Invoke fix.
-const CONTACT_API = "https://u2jbv2odgg.execute-api.ap-south-1.amazonaws.com/prod/contactUs";
+const CONTACT_API = "https://4c6jwccg61.execute-api.ap-south-1.amazonaws.com/prod/contactUs";
 
 async function submitContactForm(formData) {
   let response;
