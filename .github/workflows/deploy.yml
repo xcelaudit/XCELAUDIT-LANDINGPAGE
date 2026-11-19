@@ -1,0 +1,72 @@
+name: Deploy landing page
+
+# The landing page has no build step: dist/ IS the site, edited by hand.
+# Push to dev    -> s3://webapps.xcelaudit.com/LANDINGPAGE/dev/  (copy, not the live site)
+# Push to master -> s3://webapps.xcelaudit.com/LANDINGPAGE/      (live: xcelaudit.com, www.xcelaudit.com)
+# Files are copied, never deleted: anything already in the bucket stays.
+
+on:
+  push:
+    branches:
+      - dev
+      - master
+
+# One deploy per branch at a time; a newer push waits for the running one.
+concurrency:
+  group: landing-deploy-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve S3 target
+        id: target
+        run: |
+          case "${GITHUB_REF_NAME}" in
+            dev)    TARGET="s3://webapps.xcelaudit.com/LANDINGPAGE/dev/" ;;
+            master) TARGET="s3://webapps.xcelaudit.com/LANDINGPAGE/" ;;
+            *)
+              echo "No deploy target for branch '${GITHUB_REF_NAME}'."
+              exit 1
+              ;;
+          esac
+          echo "path=$TARGET" >> "$GITHUB_OUTPUT"
+          echo "Branch ${GITHUB_REF_NAME} deploys to $TARGET"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check dist is complete
+        run: |
+          # Refuse to upload a broken or partial site.
+          for f in index.html robots.txt sitemap.xml favicon.ico assets/gtm-loader.js assets/safe-analytics.js; do
+            if [ ! -s "dist/$f" ]; then
+              echo "Missing or empty dist/$f - not deploying."
+              exit 1
+            fi
+          done
+          echo "dist/ has $(find dist -type f | wc -l) files."
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-1
+
+      # Files are edited in place without new names, so every file is sent with
+      # no-cache: browsers re-check and always get the latest version.
+      # (CloudFront caching is already off for this site.) No --delete.
+      - name: Upload site files
+        run: |
+          aws s3 cp dist/ "${{ steps.target.outputs.path }}" --recursive \
+            --exclude "index.html" \
+            --cache-control "no-cache"
+
+      # index.html last, so it only points at files that are already uploaded.
+      - name: Upload index.html
+        run: |
+          aws s3 cp dist/index.html "${{ steps.target.outputs.path }}index.html" \
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --content-type "text/html; charset=utf-8"
