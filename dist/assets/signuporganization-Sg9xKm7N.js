@@ -8,7 +8,7 @@ const { useState, useEffect } = React;
 // Business API — must succeed independently of GTM/analytics.
 // Note: API Gateway must allow anonymous execute-api:Invoke and return HTTP 2xx
 // for OPTIONS preflight with Allow-Methods including POST (see api-gateway-resource-policy.json).
-const SIGNUP_API = "https://u2jbv2odgg.execute-api.ap-south-1.amazonaws.com/prod/createOrganisation";
+const SIGNUP_API = "https://4c6jwccg61.execute-api.ap-south-1.amazonaws.com/prod/createOrganisation";
 
 function deriveOrganisationCode(name) {
   const letters = name.replace(/[^a-zA-Z]/g, "");
