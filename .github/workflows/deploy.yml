@@ -16,6 +16,12 @@ concurrency:
   group: landing-deploy-${{ github.ref_name }}
   cancel-in-progress: false
 
+# Needed for GitHub OIDC: the job gets a short-lived token and assumes
+# AWS_ROLE_ARN; no long-lived access keys are stored anywhere.
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -48,11 +54,11 @@ jobs:
           done
           echo "dist/ has $(find dist -type f | wc -l) files."
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials (OIDC role)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: landing-${{ github.ref_name }}-${{ github.run_id }}
           aws-region: ap-southeast-1
 
       # Files are edited in place without new names, so every file is sent with
